@@ -1,0 +1,25 @@
+---
+- name: Create tempdir
+  tempfile:
+    state: directory
+    suffix: jaeger
+  register: jaeger_tempdir
+  changed_when: false
+
+- name: Render templates
+  template:
+    dest: "{{ jaeger_tempdir.path }}/jaeger.yaml"
+    src: "../templates/jaeger.yaml.j2"
+  changed_when: false
+
+- name: Apply templates
+  command: kubectl --kubeconfig {{ data_path }}/certificates/configs/admin/admin.conf apply -f {{ jaeger_tempdir.path }}/jaeger.yaml
+  register: apply_jaeger
+  changed_when: >
+    apply_jaeger.stdout is search("created")
+    or apply_jaeger.stdout is search("configured")
+- name: Cleanup tempdir
+  file:
+    state: absent
+    path: "{{ jaeger_tempdir.path }}"
+  changed_when: false

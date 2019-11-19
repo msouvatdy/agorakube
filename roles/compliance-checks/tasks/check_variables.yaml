@@ -54,6 +54,11 @@
     msg: "Variable init_helm is set to {{ init_helm }} ! Supported values are : True, False"
   when: (init_helm | string) not in ['True','False']
 
+- name: Check install_helm
+  fail:
+    msg: "Variable install_jaeger is set to {{ install_jaeger }} ! Supported values are : True, False"
+  when: (install_jaeger | string) not in ['True','False']
+
 - name: Check cluster_cidr
   fail:
     msg: "Variable cluster_cidr must be an IP adresse CIDR !"

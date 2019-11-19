@@ -33,3 +33,7 @@
 - name: Install K8S Service Mesh
   include_tasks: linkerd.yaml
   when:  service_mesh  == 'linkerd'
+
+- name: Install Jaeger
+  include_tasks: jaeger.yaml
+  when: install_jaeger == true
