@@ -47,7 +47,11 @@ data:
 apiVersion: v1
 kind: List
 items:
-- apiVersion: apps/v1beta1
+{% if 'v1.16' in kubernetes_release %}
+- apiVersion: apps/v1
+{% else %}
+- apiVersion: extensions/v1beta1
+{% endif %}
   kind: StatefulSet
   metadata:
     namespace: jaeger
