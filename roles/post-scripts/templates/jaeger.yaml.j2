@@ -20,6 +20,7 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: jaeger
   name: jaeger-configuration
   labels:
     app: jaeger
@@ -49,6 +50,7 @@ items:
 - apiVersion: apps/v1beta1
   kind: StatefulSet
   metadata:
+    namespace: jaeger
     name: elasticsearch
     labels:
       app: elasticsearch
@@ -60,6 +62,7 @@ items:
     replicas: 1
     template:
       metadata:
+        namespace: jaeger
         labels:
           app: elasticsearch
           app.kubernetes.io/name: elasticsearch
@@ -98,6 +101,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    namespace: jaeger
     name: elasticsearch
     labels:
       app: elasticsearch
@@ -134,6 +138,7 @@ items:
       type: Recreate
     template:
       metadata:
+        namespace: jaeger
         labels:
           app: jaeger
           app.kubernetes.io/name: jaeger
